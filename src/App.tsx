@@ -9,6 +9,7 @@ import PropertyDetails from "./pages/PropertyDetails";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import ScrollRestoration from "./components/ScrollRestoration";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollRestoration />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/property/:propertyId" element={<PropertyDetails />} />
