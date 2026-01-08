@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { CheckCircle2, Loader2, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ETicket } from "@/components/ETicket";
+import axios from "axios";
 
 const DemoPayment = () => {
   const location = useLocation();
@@ -37,7 +38,7 @@ const DemoPayment = () => {
     const transactionId = "TXN" + Math.random().toString(10).substring(2, 14);
     const now = new Date();
     
-    setTimeout(() => {
+    setTimeout(async () => {
       setPaymentInfo({
         orderId,
         transactionId,
@@ -51,25 +52,50 @@ const DemoPayment = () => {
       const dueAmount = bookingData.totalPrice - bookingData.advanceAmount;
       const mapLink = "https://maps.app.goo.gl/PawnaLake";
 
-      const commonHeader = `*🏡 LOONCAMP E-TICKET*\n📍 *Property:* ${bookingData.propertyTitle}\n🔖 *Booking ID:* ${ticketId}\n\n`;
-      const commonFooter = `\n🔗 *Location:* ${mapLink}\nHost: LoonCamp.shop | +${TEST_NUMBER}`;
+      try {
+        // Create e-ticket in database
+        const ticketResponse = await axios.post("/api/etickets", {
+          ticket_id: ticketId,
+          property_id: bookingData.propertyId,
+          guest_name: bookingData.name,
+          check_in_date: bookingData.checkIn,
+          check_out_date: bookingData.checkOut,
+          paid_amount: `₹${bookingData.advanceAmount}`,
+          due_amount: `₹${dueAmount}`
+        });
 
-      const messages = [
-        // 1. Guest Notification
-        `${commonHeader}👤 *Guest:* ${bookingData.name}\n📅 *Check-in:* ${bookingData.checkIn}\n💰 *Paid:* ₹${bookingData.advanceAmount}\n🔴 *DUE:* ₹${dueAmount}${commonFooter}`,
-        // 2. Property Owner Notification
-        `*NEW BOOKING ALERT (OWNER)*\n${commonHeader}👤 *Guest:* ${bookingData.name}\n📅 *Check-in:* ${bookingData.checkIn}\n💰 *Adv Received:* ₹${bookingData.advanceAmount}\n🚩 *Action:* Prepare property for guest Arrival.`,
-        // 3. Admin/Host Notification
-        `*BOOKING CONFIRMATION (ADMIN)*\n${commonHeader}👤 *Guest:* ${bookingData.name}\n💰 *Total:* ₹${bookingData.totalPrice}\n✅ *Payment:* SUCCESS (Paytm)\n🆔 *Order ID:* ${orderId}`
-      ];
+        if (ticketResponse.data.success) {
+          const ticketUrl = `${window.location.origin}/ticket/${ticketId}`;
+          const propertyName = ticketResponse.data.data.property_name;
 
-      // Execute triple notification sequence
-      messages.forEach((msg, index) => {
-        setTimeout(() => {
-          const whatsappUrl = `https://api.whatsapp.com/send?phone=${TEST_NUMBER}&text=${encodeURIComponent(msg)}`;
-          window.open(whatsappUrl, "_blank");
-        }, index * 2000); // 2s delay between messages to avoid browser pop-up blocking
-      });
+          const commonHeader = `*🏡 LOONCAMP E-TICKET*\n📍 *Property:* ${propertyName}\n🔖 *Booking ID:* ${ticketId}\n\n`;
+          const commonFooter = `\n🔗 *Ticket Link:* ${ticketUrl}\n📍 *Location:* ${mapLink}\nHost: LoonCamp.shop | +${TEST_NUMBER}`;
+
+          const messages = [
+            // 1. Guest Notification
+            `${commonHeader}👤 *Guest:* ${bookingData.name}\n📅 *Check-in:* ${bookingData.checkIn}\n💰 *Paid:* ₹${bookingData.advanceAmount}\n🔴 *DUE:* ₹${dueAmount}${commonFooter}`,
+            // 2. Property Owner Notification
+            `*NEW BOOKING ALERT (OWNER)*\n${commonHeader}👤 *Guest:* ${bookingData.name}\n📅 *Check-in:* ${bookingData.checkIn}\n💰 *Adv Received:* ₹${bookingData.advanceAmount}\n🚩 *Action:* Prepare property for guest Arrival.\n🔗 *Ticket Link:* ${ticketUrl}`,
+            // 3. Admin/Host Notification
+            `*BOOKING CONFIRMATION (ADMIN)*\n${commonHeader}👤 *Guest:* ${bookingData.name}\n💰 *Total:* ₹${bookingData.totalPrice}\n✅ *Payment:* SUCCESS (Paytm)\n🆔 *Order ID:* ${orderId}\n🔗 *Ticket Link:* ${ticketUrl}`
+          ];
+
+          // Execute triple notification sequence
+          messages.forEach((msg, index) => {
+            setTimeout(() => {
+              const whatsappUrl = `https://api.whatsapp.com/send?phone=${TEST_NUMBER}&text=${encodeURIComponent(msg)}`;
+              window.open(whatsappUrl, "_blank");
+            }, index * 2000); // 2s delay between messages to avoid browser pop-up blocking
+          });
+        }
+      } catch (err) {
+        console.error("Failed to generate ticket:", err);
+        toast({
+          title: "Ticket Generation Failed",
+          description: "Payment successful but failed to generate ticket link.",
+          variant: "destructive"
+        });
+      }
 
       setStep("success");
       toast({

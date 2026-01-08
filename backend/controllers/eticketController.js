@@ -27,10 +27,17 @@ const createETicket = async (req, res) => {
       [ticket_id, property_id, guest_name, check_in_date, check_out_date, paid_amount, due_amount]
     );
 
+    // Fetch property name for WhatsApp message
+    const propResult = await query('SELECT title FROM properties WHERE id = $1', [property_id]);
+    const propertyName = propResult.rows[0]?.title || 'Property';
+
     return res.status(201).json({
       success: true,
       message: 'E-ticket created successfully.',
-      data: result.rows[0]
+      data: {
+        ...result.rows[0],
+        property_name: propertyName
+      }
     });
   } catch (error) {
     console.error('Create e-ticket error:', error);
