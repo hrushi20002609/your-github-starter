@@ -97,11 +97,11 @@ const PropertyCard = ({
   };
 
   return (
-    <div className="group cursor-pointer px-4 mb-6" onClick={handleNavigate}>
+    <div className="group cursor-pointer px-2 mb-6" onClick={handleNavigate}>
       <div className="bg-card rounded-[40px] overflow-hidden border border-border/10 hover:border-primary/30 transition-all duration-300 shadow-sm">
         {/* Image Container */}
         <div 
-          className="relative h-72 overflow-hidden"
+          className="relative h-64 overflow-hidden"
           style={{ touchAction: 'auto' }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
