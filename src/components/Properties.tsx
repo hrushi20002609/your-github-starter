@@ -24,8 +24,9 @@ const Properties = () => {
             ...p,
             priceNote: p.price_note,
             isAvailable: p.is_available,
-            image: p.images && p.images.length > 0 ? p.images[0].image_url : "",
-            images: p.images ? p.images.map((img: any) => img.image_url) : []
+            isTopSelling: p.is_top_selling,
+            image: p.images && p.images.length > 0 ? p.images[0].image_url : "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
+            images: p.images && p.images.length > 0 ? p.images.map((img: any) => img.image_url) : ["https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80"]
           }));
           setProperties(mappedProperties);
         }
