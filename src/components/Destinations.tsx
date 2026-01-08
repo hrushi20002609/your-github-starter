@@ -56,7 +56,17 @@ const Destinations = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                 
                 {/* Content */}
-                <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                <div 
+                  className="absolute inset-0 p-8 flex flex-col justify-end cursor-pointer"
+                  onClick={() => {
+                    const targetCategory = destination.name === "Lonavala" ? "villa" : "camping";
+                    const element = document.getElementById(`category-${targetCategory}`);
+                    if (element) {
+                      element.click();
+                      document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
                   <div className="transform transition-transform duration-500 group-hover:translate-y-[-10px]">
                     <span className="text-xs uppercase tracking-widest text-primary font-semibold mb-2 block">
                       {destination.location}
@@ -71,19 +81,9 @@ const Destinations = () => {
                       <span className="text-sm font-medium text-foreground">
                         <span className="text-gradient-gold font-bold">{destination.properties}</span> Properties
                       </span>
-                      <button 
-                        onClick={() => {
-                          const targetCategory = destination.name === "Lonavala" ? "villa" : "camping";
-                          const element = document.getElementById(`category-${targetCategory}`);
-                          if (element) {
-                            element.click();
-                            document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' });
-                          }
-                        }}
-                        className="text-sm font-medium text-primary elegant-underline"
-                      >
+                      <span className="text-sm font-medium text-primary elegant-underline">
                         Explore →
-                      </button>
+                      </span>
                     </div>
                   </div>
                 </div>
