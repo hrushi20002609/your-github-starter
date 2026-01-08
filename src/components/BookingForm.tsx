@@ -11,11 +11,12 @@ import { cn } from "@/lib/utils";
 
 interface BookingFormProps {
   propertyName: string;
+  propertyId: string;
   pricePerPerson: number;
   onClose?: () => void;
 }
 
-export function BookingForm({ propertyName, pricePerPerson, onClose }: BookingFormProps) {
+export function BookingForm({ propertyName, propertyId, pricePerPerson, onClose }: BookingFormProps) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -50,6 +51,7 @@ export function BookingForm({ propertyName, pricePerPerson, onClose }: BookingFo
       state: { 
         bookingData: {
           ...formData,
+          propertyId: propertyId,
           propertyTitle: propertyName,
           checkIn: format(formData.checkIn, "PPP"),
           checkOut: format(formData.checkOut, "PPP"),

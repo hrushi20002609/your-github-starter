@@ -184,6 +184,7 @@ const PropertyDetails = () => {
               </DialogHeader>
               <BookingForm 
                 propertyName={propertyData.title} 
+                propertyId={propertyData.id}
                 pricePerPerson={parseInt(propertyData.price.replace(/[^\d]/g, "")) || 0}
               />
             </DialogContent>
