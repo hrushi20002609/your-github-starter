@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Star, MapPin, ArrowUpRight, Share2, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Star, MapPin, Share2, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getOptimizedImageUrl } from "@/lib/cloudinary";
@@ -95,42 +95,24 @@ const PropertyCard = ({
   };
 
   return (
-    <div className="group h-full" onClick={handleNavigate}>
-      <div className="card-luxury bg-card rounded-3xl overflow-hidden border border-border/30 hover:border-primary/30 transition-all duration-500 cursor-pointer h-full">
-        {/* Image Container */}
+    <div className="group cursor-pointer" onClick={handleNavigate}>
+      <div className="bg-card rounded-2xl overflow-hidden border border-border/30 hover:border-primary/30 transition-all duration-300">
+        {/* Image Container - Reduced Height for more compact look */}
         <div 
-          className="relative h-72 overflow-hidden"
+          className="relative h-56 overflow-hidden"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
           <img
-            src={getOptimizedImageUrl(displayImages[currentImageIndex], 600)}
+            src={getOptimizedImageUrl(displayImages[currentImageIndex], 500)}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Top Badges */}
-          <div className="absolute top-4 left-4 flex gap-2">
-            {isTopSelling && (
-              <Badge className="bg-gradient-to-r from-primary to-gold-light text-primary-foreground border-none shadow-gold font-semibold">
-                <Star className="w-3 h-3 mr-1 fill-current" />
-                Top Rated
-              </Badge>
-            )}
-            {category && (
-              <Badge className="bg-background/80 backdrop-blur-sm text-foreground border-none capitalize">
-                {category}
-              </Badge>
-            )}
-          </div>
-
           {/* Availability Badge */}
           <Badge 
-            className={`absolute top-4 right-4 font-semibold text-xs px-3 py-1.5 rounded-full border-none ${
+            className={`absolute top-3 right-3 font-semibold text-[10px] px-2 py-1 rounded-lg border-none z-20 ${
               isAvailable 
                 ? "bg-emerald-500/90 text-white" 
                 : "bg-red-500/90 text-white"
@@ -139,102 +121,77 @@ const PropertyCard = ({
             {isAvailable ? "Available" : "Booked"}
           </Badge>
 
-          {/* Image Navigation */}
+          {/* Top Rated Badge */}
+          {isTopSelling && (
+            <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground border-none text-[10px] px-2 py-1 z-20 shadow-lg">
+              <Star className="w-2.5 h-2.5 mr-1 fill-current" />
+              TOP RATED
+            </Badge>
+          )}
+
+          {/* Image Navigation Arrows */}
           {displayImages.length > 1 && (
-            <>
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity">
               <button 
                 onClick={prevImage}
-                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-card/90 hover:bg-card text-foreground opacity-0 group-hover:opacity-100 transition-all z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm z-10"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-3.5 h-3.5" />
               </button>
               <button 
                 onClick={nextImage}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-card/90 hover:bg-card text-foreground opacity-0 group-hover:opacity-100 transition-all z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm z-10"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-3.5 h-3.5" />
               </button>
-              
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-                {displayImages.slice(0, 5).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setCurrentImageIndex(index);
-                    }}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentImageIndex
-                        ? "bg-primary w-6"
-                        : "bg-foreground/50 hover:bg-foreground/80"
-                    }`}
-                  />
-                ))}
-              </div>
-            </>
+            </div>
           )}
 
-          {/* Quick Actions */}
-          <div className="absolute bottom-4 right-4 flex gap-2 z-20">
+          {/* Contact Buttons Overlay */}
+          <div className="absolute bottom-3 right-3 flex gap-2 z-20">
             <Button
               size="icon"
               variant="secondary"
-              className="rounded-full w-10 h-10 bg-card/90 hover:bg-card text-foreground"
+              className="rounded-full w-8 h-8 bg-card/90 hover:bg-card text-foreground"
               onClick={handleShare}
             >
-              <Share2 className="w-4 h-4" />
+              <Share2 className="w-3.5 h-3.5" />
             </Button>
             <Button
               size="icon"
-              className="rounded-full w-10 h-10 bg-primary hover:bg-gold-light text-primary-foreground shadow-gold"
+              className="rounded-full w-8 h-8 bg-primary hover:bg-gold-light text-primary-foreground"
               onClick={handleBookNow}
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-3.5 h-3.5" />
             </Button>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-6">
-          {/* Location & Rating */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
-              <MapPin className="w-4 h-4" />
+        {/* Content - More compact padding */}
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1 text-muted-foreground text-[11px] uppercase tracking-wider">
+              <MapPin className="w-3 h-3 text-primary" />
               <span>{location}</span>
             </div>
             <div className="flex items-center gap-1 text-primary">
-              <Star className="w-4 h-4 fill-current" />
-              <span className="font-semibold">{rating}</span>
+              <Star className="w-3 h-3 fill-current" />
+              <span className="text-xs font-bold">{rating}</span>
             </div>
           </div>
 
-          {/* Title */}
-          <h3 className="font-display text-xl font-semibold text-foreground mb-4 line-clamp-1 group-hover:text-primary transition-colors">
+          <h3 className="text-base font-semibold text-foreground mb-3 line-clamp-1 group-hover:text-primary transition-colors">
             {title}
           </h3>
 
-          {/* Amenities */}
-          <div className="flex gap-2 mb-5 flex-wrap">
-            {amenities.slice(0, 3).map((amenity, index) => (
-              <span
-                key={index}
-                className="text-xs text-muted-foreground bg-secondary px-3 py-1.5 rounded-full"
-              >
-                {amenity}
-              </span>
-            ))}
-          </div>
-
-          {/* Price */}
-          <div className="flex items-center justify-between pt-4 border-t border-border/50">
+          <div className="flex items-center justify-between pt-3 border-t border-border/20">
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-display font-bold text-gradient-gold">{price}</span>
-              <span className="text-sm text-muted-foreground">/ {priceNote}</span>
+              <span className="text-xl font-bold text-gradient-gold">₹{price}</span>
+              <span className="text-[10px] text-muted-foreground uppercase tracking-tighter">/ {priceNote}</span>
             </div>
-            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              <ArrowUpRight className="w-5 h-5" />
-            </div>
+            <Badge variant="outline" className="text-[9px] border-primary/30 text-primary capitalize font-normal">
+              {category}
+            </Badge>
           </div>
         </div>
       </div>

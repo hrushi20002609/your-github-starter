@@ -4,10 +4,10 @@ import { propertyAPI } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const categoryLabels: Record<string, string> = {
-  all: "All Properties",
-  camping: "Glamping",
-  villa: "Villas",
-  cottage: "Cottages",
+  all: "All",
+  camping: "Camping",
+  villa: "Villa",
+  cottage: "Cottage",
 };
 
 const Properties = () => {
@@ -45,30 +45,29 @@ const Properties = () => {
   const categories = ["all", "camping", "villa", "cottage"];
 
   return (
-    <section id="properties" className="py-24 md:py-32">
-      <div className="container mx-auto px-6">
-        {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
-          <div className="max-w-2xl">
-            <span className="text-xs uppercase tracking-[0.3em] text-primary font-semibold mb-4 block">
-              Our Collection
+    <section id="properties" className="py-12 md:py-20">
+      <div className="container mx-auto px-4">
+        {/* Simplified Section Header with Original Toggle Style */}
+        <div className="flex flex-col items-center mb-12">
+          <div className="mb-8 text-center">
+            <span className="text-xs uppercase tracking-[0.3em] text-primary font-semibold mb-2 block">
+              Discover
             </span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-              Curated
-              <span className="text-gradient-gold italic"> Stays</span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+              Explore Our <span className="text-gradient-gold italic">Collections</span>
             </h2>
           </div>
 
-          {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2">
+          {/* Category Tabs - Restored to original simpler style */}
+          <div className="inline-flex p-1 bg-secondary/50 rounded-2xl backdrop-blur-sm border border-border/30">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-6 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? "bg-gradient-to-r from-primary to-gold-light text-primary-foreground shadow-gold"
-                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+                    ? "bg-primary text-primary-foreground shadow-lg"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {categoryLabels[category]}
@@ -77,24 +76,24 @@ const Properties = () => {
           </div>
         </div>
 
-        {/* Properties Grid */}
+        {/* Properties Grid - Responsive columns */}
         {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className="space-y-4">
-                <Skeleton className="h-72 w-full rounded-2xl" />
+                <Skeleton className="h-64 w-full rounded-2xl" />
                 <Skeleton className="h-6 w-3/4" />
                 <Skeleton className="h-4 w-1/2" />
               </div>
             ))}
           </div>
         ) : filteredProperties.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProperties.map((property, index) => (
               <div
                 key={property.id}
                 className="opacity-0 animate-fade-up"
-                style={{ animationDelay: `${index * 100}ms`, animationFillMode: "forwards" }}
+                style={{ animationDelay: `${index * 50}ms`, animationFillMode: "forwards" }}
               >
                 <PropertyCard
                   id={property.id}
