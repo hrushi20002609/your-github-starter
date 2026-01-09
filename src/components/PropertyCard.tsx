@@ -142,14 +142,14 @@ const PropertyCard = ({
           
           {/* Availability Badge */}
           <div 
-            className={`absolute top-3 left-3 z-20 px-2 py-0.5 rounded-full text-[7px] font-black tracking-tighter uppercase shadow-lg bg-black border border-white/5 backdrop-blur-sm transform-gpu transition-transform duration-300 ${
+            className={`absolute top-3 left-3 z-20 px-3 py-1 rounded-full text-[10px] font-black tracking-tighter uppercase shadow-lg bg-black border border-white/5 backdrop-blur-sm transform-gpu transition-transform duration-300 ${
               isAvailable 
                 ? "text-green-500" 
                 : "text-orange-500"
             }`}
           >
-            <div className="flex items-center gap-1">
-              <div className={`w-1 h-1 rounded-full animate-pulse ${isAvailable ? "bg-green-500" : "bg-orange-500"}`} />
+            <div className="flex items-center gap-1.5">
+              <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${isAvailable ? "bg-green-500" : "bg-orange-500"}`} />
               <span>
                 {isAvailable ? "Available" : "Booked"}
               </span>
