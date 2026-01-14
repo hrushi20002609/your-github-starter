@@ -74,6 +74,7 @@ interface PropertyDetail {
   category: "camping" | "cottage" | "villa";
   description: string;
   capacity: number;
+  max_capacity?: number;
   maxCapacity?: number;
   check_in_time?: string;
   check_out_time?: string;
