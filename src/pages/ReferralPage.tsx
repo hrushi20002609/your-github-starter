@@ -45,13 +45,13 @@ const ReferralPage = () => {
         {/* Fixed Row Options */}
         <div className="px-6 pb-4 bg-black border-b border-border/30">
           <div className="grid grid-cols-2 gap-3">
-            <Card className="p-3 bg-card border-border/50 hover:border-primary/50 transition-all cursor-pointer group rounded-2xl flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+            <Card className="p-3 bg-green-600 text-white border-green-500/50 hover:bg-green-700 transition-all cursor-pointer group rounded-2xl flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
                 <CircleCheck className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-xs truncate">Already code?</h3>
-                <p className="text-[10px] text-muted-foreground truncate">Check earning</p>
+                <h3 className="font-bold text-xs truncate">Check Earning</h3>
+                <p className="text-[10px] text-white/80 truncate">Check earning</p>
               </div>
             </Card>
 
@@ -60,7 +60,7 @@ const ReferralPage = () => {
                 <Zap className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-xs text-white truncate">New Code</h3>
+                <h3 className="font-bold text-xs text-white truncate">Generate new code</h3>
                 <p className="text-[10px] text-primary-foreground/80 truncate">Generate</p>
               </div>
             </Card>
