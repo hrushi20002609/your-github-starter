@@ -46,7 +46,9 @@ const ReferralPage = () => {
         {/* Fixed Row Options */}
         <div className="px-6 pb-4 bg-black border-b border-border/30">
           <div className="grid grid-cols-2 gap-3">
-            <Card className="p-3 bg-green-600 text-white border-green-500/50 hover:bg-green-700 transition-all cursor-pointer group rounded-2xl flex items-center gap-2">
+            <Card 
+              onClick={() => navigate("/referral/check")}
+              className="p-3 bg-green-600 text-white border-green-500/50 hover:bg-green-700 transition-all cursor-pointer group rounded-2xl flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
                 <CircleCheck className="w-4 h-4" />
               </div>

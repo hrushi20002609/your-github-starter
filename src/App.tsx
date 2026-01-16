@@ -19,6 +19,7 @@ const TicketPage = lazy(() => import("./pages/TicketPage"));
 const InformationPage = lazy(() => import("./pages/InformationPage"));
 const ReferralPage = lazy(() => import("./pages/ReferralPage"));
 const GenerateCodePage = lazy(() => import("./pages/GenerateCodePage"));
+const CheckEarningPage = lazy(() => import("./pages/CheckEarningPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -63,6 +64,7 @@ const App = () => (
             <Route path="/info/:type" element={<PageWrapper><InformationPage /></PageWrapper>} />
             <Route path="/referral" element={<PageWrapper><ReferralPage /></PageWrapper>} />
             <Route path="/referral/generate" element={<PageWrapper><GenerateCodePage /></PageWrapper>} />
+            <Route path="/referral/check" element={<PageWrapper><CheckEarningPage /></PageWrapper>} />
             <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
           </Routes>
         </BrowserRouter>
