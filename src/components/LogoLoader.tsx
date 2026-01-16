@@ -15,6 +15,11 @@ const LogoLoader = () => {
             src="/assets/logo1_(2)_1768238339117.png" 
             alt="Pawna Haven Camp" 
             className="w-24 h-24 md:w-32 md:h-32 object-contain animate-pulse"
+            onError={(e) => {
+              console.error("Logo failed to load in loader");
+              // Fallback to the other known logo if this one fails
+              (e.target as HTMLImageElement).src = "/assets/logo.png";
+            }}
           />
         </div>
       </div>
