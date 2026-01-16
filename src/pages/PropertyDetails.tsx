@@ -232,7 +232,7 @@ const PropertyDetails = () => {
         <div className="mb-8">
           <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-muted-foreground block mb-2">Total Starting At</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-display font-bold text-primary tracking-tight">{propertyData.price}</span>
+            <span className="text-5xl font-display font-bold text-primary tracking-tight">₹{propertyData.price}</span>
             <span className="text-muted-foreground font-medium text-lg">/ {isVilla ? 'villa' : 'person'}</span>
           </div>
           <p className="text-sm text-muted-foreground mt-3 font-medium flex items-center gap-2">
