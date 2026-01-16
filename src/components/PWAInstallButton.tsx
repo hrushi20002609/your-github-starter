@@ -56,12 +56,7 @@ export function PWAInstallButton({ variant = 'floating', className }: PWAInstall
           { duration: 6000 }
         );
       } else {
-        // Fallback for Chrome/Android where the prompt might be blocked or delayed
-        console.log("No deferredPrompt, providing fallback instructions");
-        toast.info(
-          "Tap the three dots (⋮) in your browser menu and select 'Install app' or 'Add to Home screen' for a one-click experience! 🚀",
-          { duration: 6000 }
-        );
+        toast.error("Install option is not yet available. Please wait a moment for the browser to recognize the app.");
       }
       return;
     }
