@@ -141,7 +141,7 @@ export function BookingForm({
             />
           </div>
           <div className="grid gap-1.5">
-            <Label htmlFor="mobile">Mobile Number</Label>
+            <Label htmlFor="mobile">Mobile Number (whatsapp)</Label>
             <Input 
               id="mobile" 
               type="tel"
